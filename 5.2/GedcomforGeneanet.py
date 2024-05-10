@@ -704,13 +704,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
         if path:
             self.zipfile.write(path)
 
-#    def _family_events(self, family):
-#        super(GedcomWriterforGeneanet, self)._family_events(family)
-#        level = 1
-#        self._writeln(level,"TEST")
-#        if (int(family.get_relationship()) == FamilyRelType.UNMARRIED or int(family.get_relationship()) == FamilyRelType.UNKNOWN):
-#            self._writeln(level, "_UST", "COHABITATION")
-    
 # Workaround pour geneanet upload
 #    def _url_list(self, obj, level):
 #        if self.include_persurl:
@@ -832,8 +825,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
         if etype in (EventType.BIRTH, EventType.DEATH, EventType.MARRIAGE):
             return
         role = int(event_ref.get_role())
-#        if role != EventRoleType.PRIMARY:
-#            return
         devel = 2
         if self.include_witnesses:
             if etype in (EventType.BAPTISM, EventType.CHRISTEN):
@@ -846,7 +837,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
                                 if (int(event_ref.get_role()) == EventRoleType.PRIMARY and int(ref.get_role()) == EventRoleType.CUSTOM):
                                     level = 1
                                     self._writeln(level, "ASSO", "@%s@" % person2.get_gramps_id())
-#                                    self._writeln(level+1, "TYPE", "INDI")
                                     if person2.get_gender() == Person.MALE:
                                         self._writeln(level+1, "RELA", "Godfather")
                                     elif person2.get_gender() == Person.FEMALE:
@@ -858,7 +848,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
                                 elif (int(ref.get_role()) == EventRoleType.PRIMARY):
                                     level = 1
                                     self._writeln(level, "ASSO", "@%s@" % person2.get_gramps_id())
-#                                    self._writeln(level+1, "TYPE", "INDI")
                                     if person2.get_gender() == Person.MALE:
                                         self._writeln(level+1, "RELA", "Godson")
                                     elif person2.get_gender() == Person.FEMALE:
@@ -867,12 +856,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
                                         self._writeln(level+1, "RELA", "Godchild")
 
                                     self._note_references(ref.get_note_list(), level+1)
-#                                else:
-#                                    level = 2
-#                                    self._writeln(level, "ASSO", "@%s@" % person2.get_gramps_id())
-#                                    self._writeln(level+1, "TYPE", "INDI")
-#                                    self._writeln(level+1, "RELA", "Witness")
-#                                    self._note_references(ref.get_note_list(), level+1)
             else:
                 devel = 2
                 for (objclass, handle) in self.dbase.find_backlink_handles(
@@ -1065,7 +1048,7 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
         self._writeln(1, "SUBM", "@SUBM@")
         if self.relativepath:
             filenam = os.path.basename(filename)
-            self._writeln(1, "FILE2", filenam, limit=255)
+            self._writeln(1, "FILE", filenam, limit=255)
         else:
             self._writeln(1, "FILE", filename, limit=255)
         self._writeln(1, "COPR", 'Copyright (c) %d %s.' % (year, rname))
