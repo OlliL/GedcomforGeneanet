@@ -834,7 +834,7 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
                     if person2 and person2 != person:
                         for ref in person2.get_event_ref_list():
                             if (ref.ref == event.handle):
-                                if (int(event_ref.get_role()) == EventRoleType.PRIMARY and int(ref.get_role()) == EventRoleType.CUSTOM):
+                                if (int(event_ref.get_role()) == EventRoleType.PRIMARY and int(ref.get_role()) in [EventRoleType.CUSTOM, EventRoleType.GODPARENT]):
                                     level = 1
                                     self._writeln(level, "ASSO", "@%s@" % person2.get_gramps_id())
                                     if person2.get_gender() == Person.MALE:
