@@ -46,7 +46,7 @@ from gramps.gui.plug.export import WriterOptionBox
 from gramps.gen.errors import DatabaseError
 from gramps.gen.lib.date import Today
 from gramps.gen.lib import (EventRoleType, FamilyRelType, Citation, EventType,Date, \
- PlaceType,Person, AttributeType, NameType, NoteType)
+ PlaceType,Person, Attribute, AttributeType, NameType, NoteType)
 from gramps.gen.const import GRAMPS_LOCALE as glocale
 from gramps.gen.utils.file import media_path_full, media_path, relative_path
 from gramps.gen.utils.location import get_location_list
@@ -822,7 +822,6 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
 
         if(EventType.STILLBIRTH):
             self._writeln(1, "DEAT")
-            dateobj = event.get_date_object()
             self._dump_event_stats(event, event_ref)
             self._writeln(2, "AGE", "STILLBORN")
             return
