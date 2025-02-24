@@ -820,7 +820,9 @@ class GedcomWriterforGeneanet(exportgedcom.GedcomWriter):
         Write the witnesses associated with other personnal event.
         """
 
-        if(EventType.STILLBIRTH):
+        if(int(event.get_type()) == EventType.STILLBIRTH):
+            self._writeln(1, "BIRT")
+            self._dump_event_stats(event, event_ref)
             self._writeln(1, "DEAT")
             self._dump_event_stats(event, event_ref)
             self._writeln(2, "AGE", "STILLBORN")
